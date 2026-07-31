@@ -141,6 +141,7 @@ function renderizarRanking() {
         </tr>`
     )
     .join("");
+  vincularExclusao(tbody, dados.ranking);
 }
 
 function renderizarProximas() {
@@ -161,6 +162,7 @@ function renderizarProximas() {
         </tr>`
     )
     .join("");
+  vincularExclusao(tbody, dados.proximas);
 }
 
 function renderizar() {
@@ -181,20 +183,19 @@ document.getElementById("btnAddSchedule").addEventListener("click", () => {
   renderizar();
 });
 
-function configurarExclusao(bodyId, lista) {
-  document.getElementById(bodyId).addEventListener("click", e => {
-    const btn = e.target.closest(".btn-delete");
-    if (!btn) return;
-    const row = btn.closest("tr");
-    if (!row) return;
-    lista.splice(Number(row.dataset.index), 1);
-    salvar(true);
-    renderizar();
+function vincularExclusao(tbody, lista) {
+  tbody.querySelectorAll(".btn-delete").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const row = btn.closest("tr");
+      if (!row) return;
+      lista.splice(Number(row.dataset.index), 1);
+      salvar(true);
+      renderizar();
+    });
   });
 }
-
-configurarExclusao("rankingBody", dados.ranking);
-configurarExclusao("scheduleBody", dados.proximas);
 
 function sincronizarCelula(cell) {
   const row = cell.closest("tr");
