@@ -220,7 +220,8 @@ tbody tr:hover {
 }
 
 .actions-col {
-  width: 44px;
+  width: 56px;
+  text-align: center;
 }
 
 .btn-delete {
@@ -229,9 +230,10 @@ tbody tr:hover {
   color: #c0392b;
   font-size: 18px;
   font-weight: 700;
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  line-height: 1;
+  border-radius: 8px;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.15s, background 0.2s;

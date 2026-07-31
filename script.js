@@ -137,7 +137,7 @@ function renderizarRanking() {
           </td>
           <td class="editable-cell" contenteditable="true" data-field="nome">${item.nome}</td>
           <td class="count-col editable-cell" contenteditable="true" data-field="apresentacoes">${item.apresentacoes}</td>
-          <td class="actions-col"><button class="btn-delete" title="Excluir">×</button></td>
+          <td class="actions-col"><button type="button" class="btn-delete" title="Excluir">×</button></td>
         </tr>`
     )
     .join("");
@@ -157,7 +157,7 @@ function renderizarProximas() {
         <tr data-index="${index}">
           <td class="date-col editable-cell" contenteditable="true" data-field="data">${item.data}</td>
           <td class="editable-cell" contenteditable="true" data-field="nome">${item.nome}</td>
-          <td class="actions-col"><button class="btn-delete" title="Excluir">×</button></td>
+          <td class="actions-col"><button type="button" class="btn-delete" title="Excluir">×</button></td>
         </tr>`
     )
     .join("");
