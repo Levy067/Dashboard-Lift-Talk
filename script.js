@@ -1,5 +1,8 @@
 const STORAGE_KEY = "lift-talks-dashboard";
 
+const SUPABASE_URL = "https://attpbpqpkuwdqaxvgwnj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Tjz6uBg1ZC7JkjH_dJ1L3g_EGEpuPgZ";
+
 const defaults = {
   titulo: "Dashboard Lift Talks",
   empresa: "Lift Contabilidade",
@@ -41,12 +44,47 @@ function carregarDados() {
 
 const dados = carregarDados();
 
+const headersSupabase = {
+  apikey: SUPABASE_KEY,
+  Authorization: `Bearer ${SUPABASE_KEY}`,
+  "Content-Type": "application/json"
+};
+
+async function carregarDoServidor() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/dashboard?select=data&id=eq.main`, {
+      headers: headersSupabase
+    });
+    if (!res.ok) return null;
+    const linhas = await res.json();
+    return linhas.length > 0 ? linhas[0].data : null;
+  } catch (e) {
+    console.error("Não foi possível carregar do servidor.", e);
+    return null;
+  }
+}
+
+async function salvarNoServidor() {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/dashboard?on_conflict=id`, {
+      method: "POST",
+      headers: { ...headersSupabase, Prefer: "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify({ id: "main", data: dados })
+    });
+  } catch (e) {
+    console.error("Não foi possível salvar no servidor.", e);
+  }
+}
+
+let timerServidor;
 function salvar() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
   } catch (e) {
     console.error("Não foi possível salvar no armazenamento do navegador.", e);
   }
+  clearTimeout(timerServidor);
+  timerServidor = setTimeout(salvarNoServidor, 400);
 }
 
 function formatarData(data) {
@@ -213,7 +251,20 @@ document.getElementById("updateDate").addEventListener("input", e => {
   salvar();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+async function iniciar() {
+  const dadosServidor = await carregarDoServidor();
+  if (dadosServidor && dadosServidor.ranking) {
+    dados.titulo = dadosServidor.titulo ?? dados.titulo;
+    dados.empresa = dadosServidor.empresa ?? dados.empresa;
+    dados.dataAtualizacao = dadosServidor.dataAtualizacao ?? dados.dataAtualizacao;
+    dados.ranking = Array.isArray(dadosServidor.ranking) ? dadosServidor.ranking : dados.ranking;
+    dados.proximas = Array.isArray(dadosServidor.proximas) ? dadosServidor.proximas : dados.proximas;
+    salvar();
+  } else {
+    await salvarNoServidor();
+  }
   atualizarData();
   renderizar();
-});
+}
+
+document.addEventListener("DOMContentLoaded", iniciar);
