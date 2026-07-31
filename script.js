@@ -77,15 +77,26 @@ async function salvarNoServidor() {
 }
 
 let timerServidor;
-function salvar() {
+function salvar(imediato = false) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
   } catch (e) {
     console.error("Não foi possível salvar no armazenamento do navegador.", e);
   }
   clearTimeout(timerServidor);
-  timerServidor = setTimeout(salvarNoServidor, 400);
+  if (imediato) {
+    salvarNoServidor();
+  } else {
+    timerServidor = setTimeout(salvarNoServidor, 400);
+  }
 }
+
+window.addEventListener("beforeunload", () => {
+  if (timerServidor) {
+    clearTimeout(timerServidor);
+    salvarNoServidor();
+  }
+});
 
 function formatarData(data) {
   return data.toLocaleDateString("pt-BR", {
@@ -160,13 +171,13 @@ function renderizar() {
 
 document.getElementById("btnAddRanking").addEventListener("click", () => {
   dados.ranking.push({ nome: "Novo Apresentador", apresentacoes: 1 });
-  salvar();
+  salvar(true);
   renderizar();
 });
 
 document.getElementById("btnAddSchedule").addEventListener("click", () => {
   dados.proximas.push({ data: "00/00/0000", nome: "Novo Apresentador" });
-  salvar();
+  salvar(true);
   renderizar();
 });
 
@@ -177,7 +188,7 @@ function configurarExclusao(bodyId, lista) {
     const row = btn.closest("tr");
     if (!row) return;
     lista.splice(Number(row.dataset.index), 1);
-    salvar();
+    salvar(true);
     renderizar();
   });
 }
