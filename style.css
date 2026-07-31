@@ -1,0 +1,270 @@
+:root {
+  --navy: #0a2342;
+  --navy-dark: #061830;
+  --orange: #f58220;
+  --orange-dark: #d96a0c;
+  --white: #ffffff;
+  --light: #f4f6fa;
+  --muted: #7c879a;
+  --border: #e3e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  background: var(--light);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+.header {
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.title::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--orange);
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.company {
+  color: var(--orange);
+  font-weight: 600;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+.update-date {
+  text-align: right;
+  padding: 10px 16px;
+  background: var(--navy-dark);
+  border: 1px solid rgba(245, 130, 32, 0.4);
+  border-radius: 8px;
+}
+
+.update-label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.update-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--orange);
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 32px 40px;
+}
+
+.card {
+  flex: 1 1 420px;
+  min-width: 320px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(10, 35, 66, 0.08);
+  overflow: hidden;
+}
+
+.card-header {
+  background: var(--navy);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 6px solid var(--orange);
+}
+
+.card-title {
+  color: var(--white);
+  font-size: 17px;
+  font-weight: 600;
+  padding: 16px 20px;
+}
+
+.btn-add {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  margin-right: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  opacity: 0;
+}
+
+.card-header:hover .btn-add,
+.btn-add:hover,
+.btn-add:focus-visible {
+  opacity: 1;
+}
+
+.btn-add:hover {
+  background: var(--orange-dark);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--light);
+  color: var(--navy);
+  text-align: left;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 12px 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #fff7ef;
+}
+
+.rank-col {
+  width: 48px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.rank-top {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rank-top.gold {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.count-col {
+  font-weight: 700;
+  color: var(--orange-dark);
+}
+
+.date-col {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px;
+}
+
+.editable-cell {
+  cursor: text;
+}
+
+.editable-cell:hover {
+  box-shadow: inset 0 -2px 0 var(--orange);
+}
+
+.editable-cell:focus {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+  background: #fff7ef;
+}
+
+.actions-col {
+  width: 44px;
+}
+
+.btn-delete {
+  background: transparent;
+  border: none;
+  color: #c0392b;
+  font-size: 18px;
+  font-weight: 700;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.2s;
+}
+
+tbody tr:hover .btn-delete {
+  opacity: 1;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+  color: var(--white);
+}
+
+.hint {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 8px 16px 32px;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 18px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .content {
+    padding: 20px 16px;
+  }
+
+  .update-date {
+    text-align: center;
+  }
+}

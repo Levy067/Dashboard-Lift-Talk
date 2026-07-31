@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Lift Talks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-brand">
+      <h1 class="title" id="title" contenteditable="true">Dashboard Lift Talks</h1>
+      <p class="company" id="company" contenteditable="true">Lift Contabilidade</p>
+    </div>
+    <div class="update-date">
+      <span class="update-label">Atualizado em</span>
+      <span class="update-value" id="updateDate" contenteditable="true"></span>
+    </div>
+  </header>
+
+  <main class="content">
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title">Ranking de Apresentações</h2>
+        <button class="btn-add" id="btnAddRanking">+ Adicionar</button>
+      </div>
+      <div class="table-wrap">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Apresentações</th>
+              <th class="actions-col"></th>
+            </tr>
+          </thead>
+          <tbody id="rankingBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title">Próximas Apresentações</h2>
+        <button class="btn-add" id="btnAddSchedule">+ Adicionar</button>
+      </div>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Apresentador</th>
+              <th class="actions-col"></th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <p class="hint">Clique no campo que quiser para editar. Para excluir uma linha, passe o mouse sobre ela. Título e empresa também são editáveis.</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
