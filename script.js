@@ -36,13 +36,17 @@ function carregarDados() {
   } catch (e) {
     /* ignore */
   }
-  return defaults;
+  return JSON.parse(JSON.stringify(defaults));
 }
 
 const dados = carregarDados();
 
 function salvar() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
+  } catch (e) {
+    console.error("Não foi possível salvar no armazenamento do navegador.", e);
+  }
 }
 
 function formatarData(data) {
@@ -56,6 +60,7 @@ function formatarData(data) {
 function atualizarData() {
   if (!dados.dataAtualizacao) {
     dados.dataAtualizacao = formatarData(new Date());
+    salvar();
   }
   document.getElementById("updateDate").textContent = dados.dataAtualizacao;
 }
@@ -66,13 +71,8 @@ function renderizarCabecalho() {
   document.title = dados.titulo;
 }
 
-function ordenarRanking() {
-  dados.ranking.sort((a, b) => (b.apresentacoes || 0) - (a.apresentacoes || 0));
-}
-
 function renderizarRanking() {
   const tbody = document.getElementById("rankingBody");
-  ordenarRanking();
 
   if (dados.ranking.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" class="empty">Nenhuma apresentação realizada. Clique em "+ Adicionar".</td></tr>';
