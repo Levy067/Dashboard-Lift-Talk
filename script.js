@@ -122,6 +122,7 @@ function renderizarCabecalho() {
 
 function renderizarRanking() {
   const tbody = document.getElementById("rankingBody");
+  dados.ranking.sort((a, b) => (b.apresentacoes || 0) - (a.apresentacoes || 0));
 
   if (dados.ranking.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" class="empty">Nenhuma apresentação realizada. Clique em "+ Adicionar".</td></tr>';
